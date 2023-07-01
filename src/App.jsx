@@ -3,6 +3,13 @@ import Header from "./components/header/header";
 import DeviceCard from "./components/device-card/device-card";
 
 function App() {
+  const devices = [
+    { image: "https://source.unsplash.com/KP7p0-DRGbg", name: "Main Light" },
+    { image: "https://source.unsplash.com/sO5LtzSHpDQ", name: "Ceiling Fan" },
+    { image: "https://source.unsplash.com/toX2sYnycCw", name: "Night Light" },
+    { image: "https://source.unsplash.com/ujSsIk5iZmA", name: "CCTV" },
+  ];
+
   return (
     <div className="App">
       <div className="sidebar"></div>
@@ -11,24 +18,13 @@ function App() {
         <Header />
         <div className="devices_section">
           <h1 className="devices_section_heading">Devices</h1>
-          
+
           <div className="device_container">
-            <DeviceCard
-              image="https://source.unsplash.com/KP7p0-DRGbg"
-              name="Main Light"
-            />
-            {/* <DeviceCard
-              image="https://source.unsplash.com/sO5LtzSHpDQ"
-              name="Ceiling Fan"
-            />
-            <DeviceCard
-              image="https://source.unsplash.com/toX2sYnycCw"
-              name="Night Light"
-            />
-            <DeviceCard
-              image="https://source.unsplash.com/ujSsIk5iZmA"
-              name="CCTV"
-            /> */}
+            {devices.map((device, i) => {
+              return (
+                <DeviceCard key={i} image={device.image} name={device.name} />
+              );
+            })}
           </div>
         </div>
       </div>

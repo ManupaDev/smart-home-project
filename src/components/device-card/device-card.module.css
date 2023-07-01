@@ -43,7 +43,7 @@
   font-weight: 300;
 }
 
-.device_card_icon {
+.device_card_icon_off {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,5 +52,19 @@
   border-radius: 9999px;
   border-width: 2px solid #717374;
   cursor: pointer;
-  color: #717374
+  color: #717374;
+}
+
+.device_card_icon_on {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  border-width: 2px solid #717374;
+  cursor: pointer;
+  color: #ffffff;
+  background: #717374;
+
 }
