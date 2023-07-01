@@ -9,6 +9,7 @@ function DeviceCard(props) {
       <div className={s.device_card_info}>
         <div className={s.device_card_info_container}>
           <h3 className={s.device_card_text}>{props.name}</h3>
+          <h3>{0}</h3>
           <button
             type="button"
             // onClick={handleClick}

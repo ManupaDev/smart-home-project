@@ -11,12 +11,13 @@ function App() {
         <Header />
         <div className="devices_section">
           <h1 className="devices_section_heading">Devices</h1>
+          
           <div className="device_container">
             <DeviceCard
               image="https://source.unsplash.com/KP7p0-DRGbg"
               name="Main Light"
             />
-            <DeviceCard
+            {/* <DeviceCard
               image="https://source.unsplash.com/sO5LtzSHpDQ"
               name="Ceiling Fan"
             />
@@ -27,7 +28,7 @@ function App() {
             <DeviceCard
               image="https://source.unsplash.com/ujSsIk5iZmA"
               name="CCTV"
-            />
+            /> */}
           </div>
         </div>
       </div>
