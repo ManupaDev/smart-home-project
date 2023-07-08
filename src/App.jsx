@@ -20,7 +20,7 @@ function App() {
           <h1 className="devices_section_heading">Devices</h1>
 
           <div className="device_container">
-            {devices.map((device, i) => {
+            {devices.map((device,i) => {
               return (
                 <DeviceCard key={i} image={device.image} name={device.name} />
               );
