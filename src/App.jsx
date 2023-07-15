@@ -2,35 +2,41 @@ import "./App.css";
 import Header from "./components/header/header";
 import DeviceCard from "./components/device-card/device-card";
 import LocationChip from "./components/location-chip/location-chip";
-import { useState } from "react";
+import SearchBar from "./components/search-bar/search-bar";
+import { useEffect, useState } from "react";
 
 function App() {
-  const devices = [
-    {
-      image: "https://source.unsplash.com/KP7p0-DRGbg",
-      location: "Living Room",
-      name: "Main Light",
-    },
-    {
-      image: "https://source.unsplash.com/sO5LtzSHpDQ",
-      location: "Living Room",
-      name: "Ceiling Fan",
-    },
-    {
-      image: "https://source.unsplash.com/toX2sYnycCw",
-      location: "Bed Room",
-      name: "Night Light",
-    },
-    {
-      image: "https://source.unsplash.com/ujSsIk5iZmA",
-      location: "Living Room",
-      name: "CCTV",
-    },
-  ];
-
-  const locations = ["All", "Living Room", "Bed Room"];
+  const [devices, setDevices] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [selectedLocation, setSelectedLocation] = useState("All");
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleSearchTyping = (value) => {
+    setSearchValue(value);
+    console.log(value);
+  };
+
+  useEffect(() => {
+    const getDevices = async () => {
+      const response = await fetch(
+        "https://smart-home-ui-api-production.up.railway.app/api/devices",
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      const data = await response.json();
+      console.log(data.data);
+      // console.log("Fetching data while selected location is: "+ selectedLocation);
+
+      setDevices(data.data);
+    };
+    getDevices();
+    setLoading(false);
+  }, []);
+
+  const locations = ["All", "Living Room", "Bed Room"];
 
   const handleLocationSelect = (location) => {
     setSelectedLocation(location);
@@ -38,9 +44,17 @@ function App() {
 
   const filteredDevices =
     selectedLocation === "All"
-      ? devices
+      ? devices.filter((device) => {
+          return device.name
+            .replace(" ", "")
+            .toLowerCase()
+            .includes(searchValue);
+        })
       : devices.filter((device) => {
-          return device.location === selectedLocation;
+          return (
+            device.location === selectedLocation &&
+            device.name.replace(" ", "").toLowerCase().includes(searchValue)
+          );
         });
 
   return (
@@ -54,23 +68,30 @@ function App() {
 
           {/* Menu Bar */}
           <div className="menu-bar">
-            {locations.map((location, i) => {
-              return (
-                <LocationChip
-                  key={i}
-                  location={location}
-                  selectedLocation={selectedLocation}
-                  handleLocationSelect={handleLocationSelect}
-                />
-              );
-            })}
+            <div className="menubar_item_container">
+              {locations.map((location, i) => {
+                return (
+                  <LocationChip
+                    key={i}
+                    location={location}
+                    selectedLocation={selectedLocation}
+                    handleLocationSelect={handleLocationSelect}
+                  />
+                );
+              })}
+            </div>
+            <SearchBar handleSearchTyping={handleSearchTyping} searchValue={searchValue}/>
           </div>
           <div className="device_container">
-            {filteredDevices.map((device, i) => {
-              return (
-                <DeviceCard key={i} image={device.image} name={device.name} />
-              );
-            })}
+            {!loading ? (
+              filteredDevices.map((device, i) => {
+                return (
+                  <DeviceCard key={i} image={device.image} name={device.name} />
+                );
+              })
+            ) : (
+              <h1>Loading...</h1>
+            )}
           </div>
         </div>
       </div>
