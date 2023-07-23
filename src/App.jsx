@@ -1,100 +1,16 @@
+import { Outlet } from "react-router-dom";
 import "./App.css";
-import Header from "./components/header/header";
-import DeviceCard from "./components/device-card/device-card";
-import LocationChip from "./components/location-chip/location-chip";
-import SearchBar from "./components/search-bar/search-bar";
-import { useEffect, useState } from "react";
+import NavIcon from "./components/nav-icon/nav-icon.jsx";
 
 function App() {
-  const [devices, setDevices] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const [selectedLocation, setSelectedLocation] = useState("All");
-  const [searchValue, setSearchValue] = useState("");
-
-  const handleSearchTyping = (value) => {
-    setSearchValue(value);
-    console.log(value);
-  };
-
-  useEffect(() => {
-    const getDevices = async () => {
-      const response = await fetch(
-        "https://smart-home-ui-api-production.up.railway.app/api/devices",
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      const data = await response.json();
-      console.log(data.data);
-      // console.log("Fetching data while selected location is: "+ selectedLocation);
-
-      setDevices(data.data);
-    };
-    getDevices();
-    setLoading(false);
-  }, []);
-
-  const locations = ["All", "Living Room", "Bed Room"];
-
-  const handleLocationSelect = (location) => {
-    setSelectedLocation(location);
-  };
-
-  const filteredDevices =
-    selectedLocation === "All"
-      ? devices.filter((device) => {
-          return device.name
-            .replace(" ", "")
-            .toLowerCase()
-            .includes(searchValue);
-        })
-      : devices.filter((device) => {
-          return (
-            device.location === selectedLocation &&
-            device.name.replace(" ", "").toLowerCase().includes(searchValue)
-          );
-        });
-
   return (
     <div className="App">
-      <div className="sidebar"></div>
-      <div className="widgets"></div>
-      <div className="home">
-        <Header />
-        <div className="devices_section">
-          <h1 className="devices_section_heading">Devices</h1>
-
-          {/* Menu Bar */}
-          <div className="menu-bar">
-            <div className="menubar_item_container">
-              {locations.map((location, i) => {
-                return (
-                  <LocationChip
-                    key={i}
-                    location={location}
-                    selectedLocation={selectedLocation}
-                    handleLocationSelect={handleLocationSelect}
-                  />
-                );
-              })}
-            </div>
-            <SearchBar handleSearchTyping={handleSearchTyping} searchValue={searchValue}/>
-          </div>
-          <div className="device_container">
-            {!loading ? (
-              filteredDevices.map((device, i) => {
-                return (
-                  <DeviceCard key={i} image={device.image} name={device.name} />
-                );
-              })
-            ) : (
-              <h1>Loading...</h1>
-            )}
-          </div>
-        </div>
+      <div className="sidebar">
+        <NavIcon route="home" />
+        <NavIcon route="settings" />
       </div>
+      <div className="widgets"></div>
+      <Outlet />
     </div>
   );
 }
