@@ -6,6 +6,10 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/home.jsx";
 import Settings from "./pages/settings.jsx";
+import SignUpPage from "./pages/sign-up.jsx";
+import SignInPage from "./pages/sign-in.jsx";
+import { SignIn } from "@clerk/clerk-react";
+import { SignUp } from "@clerk/clerk-react";
 
 const router = createBrowserRouter([
   {
@@ -16,8 +20,8 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path:"/settings",
-        element:<Settings/>
+        path: "/settings",
+        element: <Settings />,
       },
     ],
   },
