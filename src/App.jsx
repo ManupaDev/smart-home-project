@@ -7,6 +7,7 @@ import {
   SignedOut,
   RedirectToSignIn,
 } from "@clerk/clerk-react";
+import Widget from "./components/widget/widget";
 
 if (!import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
@@ -22,7 +23,9 @@ function App() {
             <NavIcon route="home" />
             <NavIcon route="settings" />
           </div>
-          <div className="widgets"></div>
+          <div className="widgets">
+            <Widget />
+          </div>
           <Outlet />
         </div>
       </SignedIn>
