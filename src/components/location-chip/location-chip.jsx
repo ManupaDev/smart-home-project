@@ -9,6 +9,7 @@ function LocationChip(props) {
 
   return (
     <button
+      
       type="button"
       onClick={handleClick}
       className={isSelected ? s.button_selected : s.button_not_selected}

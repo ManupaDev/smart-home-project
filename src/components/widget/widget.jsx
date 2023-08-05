@@ -39,10 +39,11 @@ function Widget() {
 
   return (
     <div>
-      <h1 className={s.widget_time}>
+      <h1 className="text-white font-normal text-5xl">
         {date.getHours() + ":" + date.getMinutes()}
       </h1>
-      <h4 className={s.widget_date}>{date.toDateString()}</h4>
+      <h4 className="text-white font-normal text-xl mt-2">{date.toDateString()}</h4>
+      
       <div className={s.widget_weather}>
         <p className={s.widget_weather_temp}>Temperature</p>
         <p className={s.widget_weather_temp}>
